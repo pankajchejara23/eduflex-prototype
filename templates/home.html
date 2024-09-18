@@ -1,0 +1,24 @@
+{% extends 'base.html'%} {% load static %} {% load i18n %} 
+
+{%block content%}
+      <section class="jumbotron text-center mt-5 pt-5">
+        <div class="container">
+          <h1 class="jumbotron-heading">EduFlex Dashboard Prototype</h1>
+          <p class="lead text-muted">
+            This prototype showcases a dashboard prototype developed using student interaction data with learning trajectories (or learning path). Each learning trajectory consists of a series of task activities designed to build a range of key skills. The dashboard provides an overview of classroom performance across the entire learning path and offers real-time insights into the current state of each student's knowledge, modeled using Bayesian knowledge modeling. By identifying skills that need further development, the dashboard helps teachers focus their efforts where students need it most, ensuring targeted and effective support.
+
+          </p>
+          <p class='m-5 p-5'>
+            <a href="{% url 'index' %}" class="btn btn-warning my-2">Check dashboard</a>
+            
+          </p>
+        </div>
+      </section>
+
+  
+
+    
+
+  
+{% endblock %}
+

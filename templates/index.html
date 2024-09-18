@@ -1,0 +1,350 @@
+{% extends 'base.html'%} {% load static %} {% load i18n %} {%block content%}
+<div class="row">
+  <p class="display-5 mt-4">Mathematics</p>
+  <br />
+  <p class="text-grey">Performance on the learning trajectory</p>
+</div>
+<div
+  class="row p-3 rounded shadow justify-content-between bg-warning bg-gradient"
+>
+  <p class="fs-4 mb-0">Current Competence level</p>
+  <p class="text-secondary fw-light">
+    <small>
+      These scores provide estimates of competency levels of students on average
+      in the classroom.
+    </small>
+  </p>
+  <hr />
+  <div class="col col-4 p-3 m-2">
+    <p class="fs-4 mb-0"> Skill 1 </p>
+    <p class="text-secondary small">
+      This is an estimate of students' competence level for the skill
+      <i>
+        Generalising operations with common fractions to algebraic fractions &
+        understanding algebraic fractions
+      </i>
+    </p>
+    
+    <br />
+    <div class="row">
+      <canvas id="three" class="col col-5 p-5 m-4"> </canvas>
+    </div>
+  </div>
+
+  <div class="col col-4 p-3 m-2">
+    <p class="fs-4 mb-0"> Skill 2 </p>
+    <p class="text-secondary small">
+      This is an estimate of students' competence level for the skill
+      <i>
+        Reducing and expanding algebraic fractions; adding, substracting,
+        multiplying and dividing two algebraic fractions; expanding and reducing
+        algebraic fractions
+      </i>
+    </p>
+    
+    <br />
+    <div class="row">
+      <canvas id="four" class="col col-5 p-5 m-4"> </canvas>
+    </div>
+  </div>
+
+  <div class="col col-3 p-3 m-2 bg-light rounded shadow">
+    <p class="fs-4 mb-0">Prior knowledge level</p>
+    <p class="text-secondary small">
+      This is an estimate of students' competence level for the skill
+      <i>
+        Reducing and expanding common fractions; adding, substracting,
+        multiplying and dividing two common fractions,understanding common
+        fractions
+      </i>
+    </p>
+    <div class="row">
+      <canvas id="prior" class="col col-5 p-5 m-1"> </canvas>
+    </div>
+  </div>
+</div>
+<div class="row py-1 justify-content-between">
+  <div class="col col-7 rounded bg-light shadow bg-gradient p-3 m-2">
+    <p class="fs-5">Knowledge model</p>
+    <hr />
+    <p class="text-secondary small ">
+      The following figure presents the current knowledge model of the classroom. The nodes in the figure represents skills (higher level as well as lower level) and directed connections between those nodes represent relationship between different skills. The size of nodes represent the probability of mastering skills corresponding to those nodes.
+    </p>
+    <div id="olm" class="m-0 pr-5" style="min-width:700px;min-height:700px;"></div>
+  </div>
+
+  <div class="col col-4 rounded p-3 bg-light shadow bg-gradient m-2">
+    <div class="row rounded p-3 bg-success bg-gradient text-white m-2 shadow">
+      <p class="fs-5">Skills with mastery level</p>
+      <hr />
+      <p class="fw-light">
+        These are skills where students on average illustrated a higher
+        level of mastery.
+      </p>
+      <div class="d-flex flex-column">
+        <div class="rounded-pill bg-white text-success p-1 px-4 mt-2 small">
+          Understanding algebraic fractions
+        </div>
+
+        <div class="rounded-pill bg-white text-success p-1 px-4 mt-2 small">
+          Adding and subtracting of algebraic fractions
+        </div>
+      </div>
+    </div>
+    <div class="row rounded bg-danger bg-gradient p-3 m-2 text-white shadow">
+        <p class="fs-5">Skills with poor level</p>
+        <hr />
+        <p class="fw-light">These are skills where students seem to struggle.</p>
+        <div class="d-flex flex-column">
+          <div class="rounded-pill bg-white text-danger p-1 px-4 mt-2 small">
+            Expanding and reducing algebraic fractions
+          </div>
+
+          <div class="rounded-pill bg-white text-danger p-1 px-4 mt-2 small">
+            Dividing algebraic fractions
+          </div>
+
+          <div class="rounded-pill bg-white text-danger p-1 px-4 mt-2 small">
+            Projecting operations of adding common fractions
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    
+    const ctx = document.getElementById("three");
+    const ctx2 = document.getElementById("four");
+    const ctx3 = document.getElementById("prior");
+    const tooltip = {
+                        enabled: true,
+                        callbacks: {
+                            label: function (tooltipData) {
+                                const labels = 
+                                      tooltipData.dataset.label.toString();
+                                const values =
+                                  tooltipData.dataset.data[tooltipData.dataIndex];
+                                const result = 
+                                      tooltipData.dataset.data.reduce(
+                                    (var1, var2) => var1 + var2,
+                                    0
+                                );
+                                const percentage = 
+                                      ((values / result) * 100).toFixed(2) + "%";
+
+                                return `${labels}: ${percentage}`;
+                            },
+                        }
+                      };
+
+    const options = {
+        plugins: {
+          datalabels: {
+            formatter: (value, ctx) => {
+                let sum = 0;
+                let dataArr = ctx.chart.data.datasets[0].data;
+                dataArr.map(data => {
+                    sum += data;
+                });
+                let percentage = (value*100 / sum).toFixed(2)+"%";
+                return percentage;
+            },
+            color: '#fff',
+        },
+          tooltip: tooltip,
+          title: {
+            display: false,
+            text: "Skill III 4 Score",
+          },
+          legend: {
+            display: false,
+          },
+        },
+        tooltips: {
+          enabled: false,
+        },
+      };
+    new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: ["Yes", "No"],
+        datasets: [
+          {
+            label: "Skill score",
+            data: [40, 60],
+            backgroundColor: ["rgb(60, 179, 113)", "rgb(255, 205, 86)"],
+            hoverOffset: 4,
+            borderRadius: 0,
+            backgroundColor: ["#48BB78", "#ffc107"],
+            borderWidth: 0,
+          },
+        ],
+      },
+      options: options,
+    });
+
+    new Chart(ctx2, {
+      type: "doughnut",
+      data: {
+        labels: ["Yes", "No"],
+        datasets: [
+          {
+            label: "Skill score",
+            data: [37, 63], 
+            backgroundColor: ["rgb(60, 179, 113)", "rgb(255, 205, 86)"],
+            hoverOffset: 4,
+            borderRadius: 0,
+            backgroundColor: ["#48BB78", "#ffc107"],
+            borderWidth: 0,
+          },
+        ],
+      },
+      options: options,
+    });
+
+    new Chart(ctx3, {
+      type: "doughnut",
+      data: {
+        labels: ["Yes", "No"],
+        datasets: [
+          {
+            label: "Skill score",
+            data: [68, 32],
+            backgroundColor: ["rgb(60, 179, 113)", "rgb(255, 205, 86)"],
+            hoverOffset: 4,
+            borderRadius: 0,
+            backgroundColor: ["#48BB78", "white"],
+            borderWidth: 0,
+          },
+        ],
+      },
+      options: options,
+    });
+
+
+// Creating empty social network dynamics graph
+    cy_tmp = cytoscape({
+  	   container: document.getElementById("olm"),
+
+       style: [
+          {
+            selector: 'node',
+            css: {
+                  'content': 'data(name)',
+                  'text-valign': 'bottom',
+            }
+          },
+          {
+            selector: '[color]',
+            css: {
+               'background-color': 'data(color)',
+
+            }
+          },
+          {
+            selector: 'edge',
+            css: {
+                  'curve-style': 'bezier',
+                  'target-arrow-shape': 'triangle',
+                  'line-color': '#abb2b9 ',
+                  'target-arrow-color': '#abb2b9 '
+                }
+          },
+  				{
+  					selector: '[size]',
+  					css: {
+                'width': 'data(size)',
+                'height': 'data(size)',
+  				  }
+  				},
+          {
+  					selector: '[weight]',
+  					css: {
+                'width':'data(weight)',
+                'height': 'data(size)',
+                'color': 'black',
+  					}
+  				},
+          
+        ],
+        layout: {
+            name: 'circle',
+  				  fit: true
+  				}
+  			});
+
+
+      const nodes = [
+       {'id': 0, 'name': 'III 5', 'weight': .37, 'position':{'x':100, 'y':100}},
+       {'id': 1, 'name': 'multiplies algebraic fractions', 'weight': .22},
+       {'id': 2, 'name': 'III 4', 'weight': .40, 'position':{'x':100, 'y':50}},
+       {'id': 3,
+         'name': 'projecting operations of multiplication of common fractions',
+         'weight': .43},
+       {'id': 4, 'name': 'understanding algebraic fractions', 'weight': .66},
+       {'id': 5, 'name': 'divides algerbaic fractions', 'weight': .21},
+       {'id': 6,
+         'name': 'adds and substracts of algebraic fractions',
+         'weight': .61},
+       {'id': 7, 'name': 'II 5', 'weight': .68},
+       {'id': 8, 'name': 'understanding common fractions', 'weight': .48},
+       {'id': 9,
+         'name': 'projecting operations of adding common fractions',
+         'weight': .20},
+       {'id': 10,
+         'name': 'projecting operations of expanding and reducing common fractions',
+         'weight': .56},
+       {'id': 11, 'name': 'expands and reduces common fractions', 'weight': .51},
+       {'id': 12,
+         'name': 'expands and reduces algebraic fractions',
+         'weight': .16}];
+
+  const edges = [{'id': 'e0', 'source': 0, 'target': 1},
+ {'id': 'e1', 'source': 0, 'target': 5},
+ {'id': 'e2', 'source': 0, 'target': 6},
+ {'id': 'e3', 'source': 0, 'target': 12},
+ {'id': 'e4', 'source': 1, 'target': 5},
+ {'id': 'e5', 'source': 2, 'target': 3},
+ {'id': 'e6', 'source': 2, 'target': 4},
+ {'id': 'e7', 'source': 2, 'target': 9},
+ {'id': 'e8', 'source': 2, 'target': 10},
+ {'id': 'e9', 'source': 2, 'target': 0},
+ {'id': 'e10', 'source': 3, 'target': 9},
+ {'id': 'e11', 'source': 4, 'target': 12},
+ {'id': 'e12', 'source': 6, 'target': 1},
+ {'id': 'e13', 'source': 7, 'target': 8},
+ {'id': 'e14', 'source': 7, 'target': 11},
+ {'id': 'e15', 'source': 7, 'target': 2},
+ {'id': 'e16', 'source': 7, 'target': 0},
+ {'id': 'e17', 'source': 8, 'target': 11},
+ {'id': 'e18', 'source': 10, 'target': 3},
+ {'id': 'e19', 'source': 12, 'target': 6}];
+
+  cy_tmp.elements().remove();
+
+
+
+    for (n = 0 ; n < nodes.length; n ++) {
+      var node_id = "" + nodes[n].id;
+      console.log({ group: 'nodes', data: { id: node_id,  name: nodes[n].name, color: '#ffc107', size:50 } });
+      cy_tmp.add({ group: 'nodes', data: { id: node_id,  name: nodes[n].name, color: '#48BB78', size:100*nodes[n].weight } });
+    }
+
+    for (n = 0 ; n < edges.length; n ++) {
+      var edge_id = "" + edges[n].id;
+      console.log({ group: 'edges', data: { id: edge_id,  source: edges[n].source, target: edges[n].target , size:10 } });
+      cy_tmp.add({ group: 'edges', data: { id: edge_id,  source: edges[n].source, target: edges[n].target , size:3 } });
+    }
+    cy_tmp.layout();
+  </script>
+
+
+  {% endblock %}
+</div>
