@@ -33,7 +33,6 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from django.conf.urls.i18n import i18n_patterns
-from register import views as v
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
