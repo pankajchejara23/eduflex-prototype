@@ -18,11 +18,12 @@
   <div class="col col-4 p-3 m-2">
     <p class="fs-4 mb-0"> Skill 1 </p>
     <p class="text-secondary small">
-      This is an estimate of students' competence level for the skill
-      <i>
+     The probability of students developing the skill of  
+      <span class='fw-bold'>
         Generalising operations with common fractions to algebraic fractions &
         understanding algebraic fractions
-      </i>
+      </span> is
+       <span class='badge bg-primary text-white '>40 %</span> 
     </p>
     
     <br />
@@ -34,12 +35,10 @@
   <div class="col col-4 p-3 m-2">
     <p class="fs-4 mb-0"> Skill 2 </p>
     <p class="text-secondary small">
-      This is an estimate of students' competence level for the skill
-      <i>
-        Reducing and expanding algebraic fractions; adding, substracting,
-        multiplying and dividing two algebraic fractions; expanding and reducing
-        algebraic fractions
-      </i>
+      The probability of students developing the skill of 
+      <span class='fw-bold'>
+        Reducing and expanding algebraic fractions; adding, substracting, multiplying and dividing two algebraic fractions; expanding and reducing algebraic fractions 
+      </span> is <span class='badge bg-danger text-white '>37 %</span>
     </p>
     
     <br />
@@ -51,12 +50,9 @@
   <div class="col col-3 p-3 m-2 bg-light rounded shadow">
     <p class="fs-4 mb-0">Prior knowledge level</p>
     <p class="text-secondary small">
-      This is an estimate of students' competence level for the skill
-      <i>
-        Reducing and expanding common fractions; adding, substracting,
-        multiplying and dividing two common fractions,understanding common
-        fractions
-      </i>
+      This is an estimate of the level of students' prior knowledge of 
+      <span class='fw-bold'>
+        Reducing and expanding common fractions</span>. <br/><br/> The probability of students having the pre-requisite skill is </span> <span class='badge bg-success text-white '>68 %</span>
     </p>
     <div class="row">
       <canvas id="prior" class="col col-5 p-5 m-1"> </canvas>
@@ -68,7 +64,7 @@
     <p class="fs-5">Knowledge model</p>
     <hr />
     <p class="text-secondary small ">
-      The following figure presents the current knowledge model of the classroom. The nodes in the figure represents skills (higher level as well as lower level) and directed connections between those nodes represent relationship between different skills. The size of nodes represent the probability of mastering skills corresponding to those nodes.
+       The following figure presents the current knowledge model of the classroom. The nodes in the figure represent skills (higher level as well as lower level) and directed connections between those nodes represent relationships between different skills. <br/> The <b>size of nodes</b> represents the <span class='fw-bold'>probability</span> of mastering skills corresponding to those nodes.
     </p>
     <div id="olm" class="m-0 pr-5" style="min-width:700px;min-height:700px;"></div>
   </div>
@@ -182,7 +178,7 @@
             backgroundColor: ["rgb(60, 179, 113)", "rgb(255, 205, 86)"],
             hoverOffset: 4,
             borderRadius: 0,
-            backgroundColor: ["#48BB78", "#ffc107"],
+            backgroundColor: ["#48BB78", "grey"],
             borderWidth: 0,
           },
         ],
@@ -201,7 +197,7 @@
             backgroundColor: ["rgb(60, 179, 113)", "rgb(255, 205, 86)"],
             hoverOffset: 4,
             borderRadius: 0,
-            backgroundColor: ["#48BB78", "#ffc107"],
+            backgroundColor: ["#48BB78", "grey"],
             borderWidth: 0,
           },
         ],
@@ -220,7 +216,7 @@
             backgroundColor: ["rgb(60, 179, 113)", "rgb(255, 205, 86)"],
             hoverOffset: 4,
             borderRadius: 0,
-            backgroundColor: ["#48BB78", "white"],
+            backgroundColor: ["#48BB78", "grey"],
             borderWidth: 0,
           },
         ],
@@ -230,6 +226,8 @@
 
 
 // Creating empty social network dynamics graph
+   
+
     cy_tmp = cytoscape({
   	   container: document.getElementById("olm"),
 
@@ -239,6 +237,8 @@
             css: {
                   'content': 'data(name)',
                   'text-valign': 'bottom',
+                  'font-size': '.3 rem',
+
             }
           },
           {
@@ -275,8 +275,7 @@
           
         ],
         layout: {
-            name: 'circle',
-  				  fit: true
+            name: 'cose',
   				}
   			});
 
@@ -286,7 +285,7 @@
        {'id': 1, 'name': 'multiplies algebraic fractions', 'weight': .22},
        {'id': 2, 'name': 'III 4', 'weight': .40, 'position':{'x':100, 'y':50}},
        {'id': 3,
-         'name': 'projecting operations of multiplication of common fractions',
+         'name': 'projecting operations of  multiplication of common fractions',
          'weight': .43},
        {'id': 4, 'name': 'understanding algebraic fractions', 'weight': .66},
        {'id': 5, 'name': 'divides algerbaic fractions', 'weight': .21},
@@ -334,7 +333,7 @@
     for (n = 0 ; n < nodes.length; n ++) {
       var node_id = "" + nodes[n].id;
       console.log({ group: 'nodes', data: { id: node_id,  name: nodes[n].name, color: '#ffc107', size:50 } });
-      cy_tmp.add({ group: 'nodes', data: { id: node_id,  name: nodes[n].name, color: '#48BB78', size:100*nodes[n].weight } });
+      cy_tmp.add({ group: 'nodes', data: { id: node_id,  name: nodes[n].name, color: '#48BB78', size:60*nodes[n].weight } });
     }
 
     for (n = 0 ; n < edges.length; n ++) {

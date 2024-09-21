@@ -43,5 +43,6 @@ from django.conf import settings
 from django.contrib import admin
 urlpatterns = i18n_patterns(
     path('', views.home, name='home'),
-    path('teacher/', views.index, name='index')
+    path('teacher/', views.teacher, name='index'),
+    path('student/', views.student, name='student')
 ) 

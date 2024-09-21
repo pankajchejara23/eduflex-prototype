@@ -25,7 +25,7 @@ LANGUAGE_SESSION_KEY = '_language'
 
 data = pd.read_csv('static/instructional-trajectory-session-24-results.csv')
 
-def index(request):
+def teacher(request):
     if request.method == "POST":
         pass
     else:
@@ -34,3 +34,6 @@ def index(request):
 
 def home(request):
     return render(request, 'home.html')
+
+def student(request):
+    return render(request, 'student.html')
