@@ -12,10 +12,9 @@ import os
 from django.core.wsgi import get_wsgi_application
 import sys
 
-sys.path.append('/home/Seeds_bootstrap')
-sys.path.append('/home/Seeds_bootstrap/seeds_bootstrap')
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'seeds_bootstrap.settings')
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'edu.settings')
 
 application = get_wsgi_application()

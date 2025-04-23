@@ -19,19 +19,13 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = Path(__file__).resolve().parent.parent
 SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
-LOGIN_URL = 'login'
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-6o8s_(%8iu(5ngpz$!e8tif4f!mp)jtk#%j$=gea&1vme9u4ni'
-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1',
-                 'eduflex.blog', '86.107.197.103','www.eduflex.blog']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -43,11 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "crispy_forms",
-    'django_browser_reload',
-    "crispy_bootstrap4",
-    "seeds_bootstrap",
-    "django_extensions"
+    "edu",
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -70,10 +60,10 @@ MIDDLEWARE = [
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-ROOT_URLCONF = 'seeds_bootstrap.urls'
+ROOT_URLCONF = 'edu.urls'
 
 GRAPH_MODELS = {
-    'app_labels': ["seeds_bootstrap"],
+    'app_labels': ["edu"],
 }
 
 TEMPLATES = [
@@ -93,7 +83,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'seeds_bootstrap.wsgi.application'
+WSGI_APPLICATION = 'edu.wsgi.application'
 
 
 # Database
